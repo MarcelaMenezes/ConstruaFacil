@@ -68,7 +68,6 @@ public class TestaCalc {
 
         //then
         assertEquals(resultadoEsperado,resultadoAtual);
-
     }
 
 }
