@@ -10,15 +10,20 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
+//Chamando a classe Evidencias que tem a maquina de tirar as fotos
+import utils.Evidencias;
 
 //3-Classes
 public class seleniumSimples {
 
     //3.1 - Atributos
     WebDriver driver;        //Declara o objeto do selenium Webdriver
+
+    Evidencias evidencias;
 
     @BeforeTest
             public void iniciar(){
@@ -27,7 +32,9 @@ public class seleniumSimples {
         System.setProperty("webdriver.chrome.driver", "drivers/chrome/96/chromedriver");
 
         //Instanciando o objeto driver como um controlador do Chrome.
-        driver = new ChromeDriver();
+        driver = new ChromeDriver();  // Instanciando
+
+        evidencias = new Evidencias();   //Intanciando
 
         driver.manage().timeouts().implicitlyWait(60000, TimeUnit.MILLISECONDS);  //Para esperar um pouco de tempo!
 
@@ -41,11 +48,15 @@ public class seleniumSimples {
 
 
     //3.2- Metodos e funções
-    @Test
-    public void consultarCurso(){
+    @Test(priority = 1)
+    public void consultarCurso() throws IOException {
 
         //B - Realizar teste
         driver.get("https://iterasys.com.br/");                                   //Abrir site alvo
+
+       //Tirar print
+        evidencias.print(driver);
+
         driver.findElement(By.id("searchtext")).click();                         //clicar no campo de pesquisa
         driver.findElement(By.id("searchtext")).clear();                         //Limpar o campo de pesquisa
         driver.findElement(By.id("searchtext")).sendKeys("mantis"); //Escrever "mantis" no campo

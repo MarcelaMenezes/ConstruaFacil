@@ -49,4 +49,16 @@ public class seleniumIDE {
         //assertThat(driver.findElement(By.cssSelector("span.comprar")).getText(), is("MATRICULE-SE  "));
         assertThat(driver.findElement(By.cssSelector("span.item-title")).getText(), is("Mantis"));
     }
+    @Test
+    public void consultarCursoCTFL() {
+        driver.get("https://iterasys.com.br/");
+        driver.manage().window().setSize(new Dimension(1420, 793));
+        driver.findElement(By.id("searchtext")).click();
+        driver.findElement(By.id("searchtext")).sendKeys("ctfl");
+        driver.findElement(By.cssSelector(".fa-search")).click();
+        assertThat(driver.findElement(By.cssSelector("h3")).getText(), is("Cursos › \"ctfl\""));
+        driver.findElement(By.cssSelector("span.comprar")).click();
+        //assertThat(driver.findElement(By.cssSelector("span.comprar")).getText(), is("MATRICULE-SE  "));
+        assertThat(driver.findElement(By.cssSelector("span.item-title")).getText(), is("Preparatório CTFL"));
+    }
 }
