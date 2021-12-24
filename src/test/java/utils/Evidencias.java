@@ -9,11 +9,11 @@ import java.io.IOException;
 
 public class Evidencias {
 
-    public  void print(WebDriver driver) throws IOException {
+    public  void print(WebDriver driver, String dataHora, String casoDeTeste, String nomePrint) throws IOException {
         //pegando o seleniun e colocando uma camera nele, pegamos o print e guardamos em foto
         File foto = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         //pegando o arquivo "foto" e copiamos para a pasta "prints"
-        FileUtils.copyFile(foto, new File("target/prints/print1.png"));
+        FileUtils.copyFile(foto, new File("target/prints/" + dataHora + "/"+ casoDeTeste + "/"+ nomePrint +".png"));
 
     }
 
