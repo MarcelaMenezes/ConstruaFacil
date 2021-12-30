@@ -9,26 +9,26 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import utils.Evidencias;
+import utils.Logs;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.SimpleFormatter;
-
 import static org.testng.Assert.assertEquals;
+
 //Chamando a classe Evidencias que tem a maquina de tirar as fotos
-import utils.Evidencias;
 
 //3-Classes
 public class seleniumSimples {
 
     //3.1 - Atributos
     WebDriver driver;        //Declara o objeto do selenium Webdriver
-
     Evidencias evidencias;
+    Logs logs;
 
-    static String dataHora = new SimpleDateFormat("yyyy-MM-dd HH-dd").format(Calendar.getInstance().getTime());
+    static String dataHora = new SimpleDateFormat("yyyy-MM-dd HH-dd-mm").format(Calendar.getInstance().getTime());
 
     @BeforeTest
             public void iniciar(){
@@ -38,10 +38,10 @@ public class seleniumSimples {
 
         //Instanciando o objeto driver como um controlador do Chrome.
         driver = new ChromeDriver();  // Instanciando
-
         evidencias = new Evidencias();   //Intanciando
-
         driver.manage().timeouts().implicitlyWait(60000, TimeUnit.MILLISECONDS);  //Para esperar um pouco de tempo!
+        logs = new Logs();
+
 
     }
 
@@ -57,6 +57,7 @@ public class seleniumSimples {
     public void consultarCurso() throws IOException {
 
         String casoDeteste = "consultar curso Mantis";
+        logs.registrarCSV("2021-07-14 20-36-05", "Consultar Curso Mantis", "Iniciou o teste");
 
         //B - Realizar teste
         driver.get("https://iterasys.com.br/");                                   //Abrir site alvo
