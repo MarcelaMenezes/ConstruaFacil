@@ -6,8 +6,9 @@ package webTests;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import utils.Evidencias;
 import utils.Logs;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
+
 import static org.testng.Assert.assertEquals;
 
 //Chamando a classe Evidencias que tem a maquina de tirar as fotos
@@ -28,9 +30,19 @@ public class seleniumSimples {
     Evidencias evidencias;
     Logs logs;
 
-    static String dataHora = new SimpleDateFormat("yyyy-MM-dd HH-dd-mm").format(Calendar.getInstance().getTime());
+    static String dataHora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
-    @BeforeTest
+    //3.2 - Metodos e funcoes
+
+    //Executa 1 vez apenas, no inicio da execucao do script
+    @BeforeClass
+    public void antesDeTudo() throws IOException {
+        logs = new Logs();
+        logs.IniciarCSV(dataHora);
+
+    }
+    //Executa antes de cada testes
+    @BeforeMethod
             public void iniciar(){
         //A - Inicio
         //Aponta para onde está o driver do Chrome
@@ -40,12 +52,12 @@ public class seleniumSimples {
         driver = new ChromeDriver();  // Instanciando
         evidencias = new Evidencias();   //Intanciando
         driver.manage().timeouts().implicitlyWait(60000, TimeUnit.MILLISECONDS);  //Para esperar um pouco de tempo!
-        logs = new Logs();
+
 
 
     }
 
-    @AfterTest
+    @AfterMethod
             public void finalizar(){
 
         driver.quit();
@@ -57,32 +69,39 @@ public class seleniumSimples {
     public void consultarCurso() throws IOException {
 
         String casoDeteste = "consultar curso Mantis";
-        logs.registrarCSV("2021-07-14 20-36-05", "Consultar Curso Mantis", "Iniciou o teste");
 
+
+        logs.registrarCSV(casoDeteste, "Iniciou o teste");
         //B - Realizar teste
         driver.get("https://iterasys.com.br/");                                   //Abrir site alvo
-
+        logs.registrarCSV(casoDeteste, "Abriu o site");
        //Tirar print
         evidencias.print(driver,dataHora,casoDeteste, "Passo 1 - Abriu o site");
 
+
         driver.findElement(By.id("searchtext")).click();                         //clicar no campo de pesquisa
+        logs.registrarCSV(casoDeteste, "Clicou em pesquisa");
         driver.findElement(By.id("searchtext")).clear();                         //Limpar o campo de pesquisa
+        logs.registrarCSV(casoDeteste, "Limpou o campo pesquisa");
         driver.findElement(By.id("searchtext")).sendKeys("mantis"); //Escrever "mantis" no campo
+        logs.registrarCSV(casoDeteste, "Escreveu mantis no campo");
 
         evidencias.print(driver,dataHora, casoDeteste, "Passo 2 - Digitou mantis");
 
         driver.findElement(By.id("btn_form_search")).click();                   // Clique na lupa
+        logs.registrarCSV(casoDeteste, "Clicou na lupa");
         assertEquals(driver.findElement(By.cssSelector("h3")).getText(),"Cursos › \"mantis\"");  //Validar o resulto da pesquisa com nome
-
+        logs.registrarCSV(casoDeteste, "Validou o resultado");
         evidencias.print(driver,dataHora, casoDeteste, "Passo 3 - Exibiu a lista de cursos com o nome mantis");
-
         driver.findElement(By.cssSelector("span.comprar")).click();   // Clica em Matricular
+        logs.registrarCSV(casoDeteste, "clicou em matricula");
         assertEquals(driver.findElement(By.cssSelector("span.item-title")).getText(),"Mantis");   //Verifica o nome do curso
+        logs.registrarCSV(casoDeteste, "Verificou o nome do curso");
         assertEquals(driver.findElement(By.cssSelector("span.new-price")).getText(), "R$ 59,99"); //Verifica o valor do curso
-
+        logs.registrarCSV(casoDeteste, "Verificou o valor do curso");
         evidencias.print(driver,dataHora,casoDeteste, "Passo 4 - Exibiu o carrinho de compras");
-
         driver.findElement(By.id("concluir_pedido")).click();   //Clica em "concluir pedido"
+        logs.registrarCSV(casoDeteste, "clicou em concluir pedido");
 
 
 
