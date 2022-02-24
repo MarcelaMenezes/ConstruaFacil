@@ -20,6 +20,12 @@ dependencies {
     implementation group: 'info.cukes', name: 'cucumber-java', version: '1.2.5'
     implementation group: 'info.cukes', name: 'cucumber-testng', version: '1.2.5'
 
+    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.13'
+    implementation group: 'com.aventstack', name: 'extentreports', version: '3.0.7' //Componente que ajuda a gerar relatorios
+    implementation group: 'com.vimalselvam', name: 'cucumber-extentsreport', version: '3.1.1' //Componete para gerar o Dashbord do relatorio
+
+
+
 
 
 
@@ -27,9 +33,10 @@ dependencies {
 
 
 test{
+    useJUnitPlatform()
     useTestNG()
-    filter {
-        excludeTestsMatching"*apiTests*"
-        excludeTestsMatching"*unitTests*"
-    }
+//    filter {
+//        excludeTestsMatching"*apiTests*"
+//        excludeTestsMatching"*unitTests*"
+//    }
 }

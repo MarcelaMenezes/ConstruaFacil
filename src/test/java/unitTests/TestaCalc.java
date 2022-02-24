@@ -8,19 +8,31 @@ public class TestaCalc {
     @Test
     public void testarsomarDoisNumeros(){
 
-        //Prepara - Configurar - Given
+        //1 - Prepara - Configurar - Given - Arrange
         int num1 = 5;
         int num2 = 7;
         int resultadoEsperado = 12;
 
-        //Executa - when (Quando)
+        //2 - Executa - when (Quando) - Act
         int resultadoAtual =  Calc.somarDoisNumeros(num1,num2);
 
-        //Validar - then (Então)
+        //3 - Validar - then (Então) - Assert
 
         System.out.println("O resulatdo esperado é "+ resultadoEsperado + "\nO resultado atual foi " + resultadoAtual);
         assertEquals(resultadoEsperado,resultadoAtual);
     }
+    @Test
+    public void testarSubtrairDoisNumeros(){
+        int num1 = 6;
+        int num2 = 2;
+        int resultadoEsperado = 4;
+
+        int resultadoAtual = Calc.subtrairDoisNumeros(num1,num2);
+
+        System.out.println("O resultado esperado é "+ resultadoEsperado + " e o resultado atual é " + resultadoAtual);
+        assertEquals(resultadoAtual,resultadoEsperado);
+    }
+
 
     @Test
     public void testarmultiplicarDoisNumeros(){
